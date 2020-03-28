@@ -1,1 +1,12 @@
-
+spring:
+  cloud:
+    stream:
+      bindings:
+        event-source:
+          destination: streaming.notification.event
+        input:
+          destination: streaming.notification.event
+        output:
+          destination: streaming.notification.email
+        email-sink:
+          destination: streaming.notification.email
