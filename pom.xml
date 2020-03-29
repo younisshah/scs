@@ -14,6 +14,11 @@
     <name>scs</name>
     <description>Demo project for Spring Cloud Stream</description>
 
+    <modules>
+        <module>integration-router</module>
+        <module>http-integration-router</module>
+    </modules>
+
     <properties>
         <java.version>1.8</java.version>
         <spring-cloud.version>Hoxton.SR3</spring-cloud.version>
