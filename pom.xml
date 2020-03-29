@@ -16,7 +16,6 @@
 
     <modules>
         <module>integration-router</module>
-        <module>http-integration-router</module>
     </modules>
 
     <properties>
