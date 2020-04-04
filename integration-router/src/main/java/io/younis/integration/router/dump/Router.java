@@ -3,6 +3,7 @@ package io.younis.integration.router;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.integration.dsl.MessageChannels;
@@ -12,6 +13,7 @@ import java.util.Random;
 
 @Slf4j
 @Configuration
+@Profile("noop")
 public class Router {
 
     @Bean
