@@ -1,4 +1,4 @@
-package io.younis.integration.router.gateway;
+package io.younis.integration.router.notification;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
@@ -9,7 +9,7 @@ import java.util.List;
 
 @Slf4j
 @Component
-@Profile("noop")
+@Profile("notification")
 public class RequestRepository {
 
     public List<String> getChannelsByEventCode(String eventCode) {

@@ -1,4 +1,4 @@
-package io.younis.integration.router.gateway;
+package io.younis.integration.router.notification;
 
 import lombok.Builder;
 import lombok.Data;

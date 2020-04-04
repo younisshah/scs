@@ -1,6 +1,5 @@
-package io.younis.integration.router.gateway;
+package io.younis.integration.router.notification;
 
-import io.younis.integration.router.notification.Request;
 import org.springframework.context.annotation.Profile;
 import org.springframework.integration.annotation.Router;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -10,15 +9,20 @@ import java.util.List;
 
 @Component
 @Profile("notification")
-public class Producer {
+public class NotificationProducer {
 
     private RequestRepository requestRepository;
 
-    public Producer(RequestRepository requestRepository) {
+    public NotificationProducer(RequestRepository requestRepository) {
         this.requestRepository = requestRepository;
     }
 
-    @Router(inputChannel = "event", autoStartup = "true", applySequence = "true")
+    @Router(
+            inputChannel = "producer",
+            autoStartup = "true",
+            applySequence = "true",
+            ignoreSendFailures = "true"
+    )
     public List<String> route(@Payload Request request) {
         return requestRepository.getChannelsByEventCode(request.getEventCode());
     }
