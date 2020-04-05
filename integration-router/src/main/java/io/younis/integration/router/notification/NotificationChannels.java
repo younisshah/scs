@@ -30,4 +30,14 @@ public class NotificationChannels {
         return new DirectChannel();
     }
 
+    @Bean
+    SubscribableChannel enrich() {
+        return new DirectChannel();
+    }
+
+    @Bean
+    SubscribableChannel enriched() {
+        return new DirectChannel();
+    }
+
 }
