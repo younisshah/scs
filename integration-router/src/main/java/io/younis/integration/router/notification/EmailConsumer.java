@@ -24,7 +24,6 @@ public class EmailConsumer {
         try {
             log.info("[+] consumed email: {}", request);
 
-            log.info("[+] enriching email..");
             Future<EnrichedRequest> enrichedFuture = notificationGateway.enrich(request, Map.of("channel", "email"));
             EnrichedRequest enrichedRequest = enrichedFuture.get();
             log.info("[+] enriched email: {}", enrichedRequest);

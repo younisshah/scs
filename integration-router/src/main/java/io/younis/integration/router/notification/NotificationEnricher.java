@@ -18,12 +18,16 @@ public class NotificationEnricher {
     public EnrichedRequest enrich(@Payload Request request, @Headers Map<String, String> headers) {
 
         String channel = headers.get("channel");
-        log.info("[+] handling enrichment request for channel: {}", channel);
 
-        return EnrichedRequest.builder()
-                .eventCode(request.getEventCode())
-                .userId(request.getUserId())
-                .message("Some email")
-                .build();
+        log.info("[+] enrichment request for channel: {}", channel);
+
+        EnrichedRequest enrichedRequest = EnrichmentStrategy
+                .getStrategy(channel)
+                .orElseThrow(() -> new IllegalArgumentException("illegal channel resolved: " + channel))
+                .enrich(request);
+
+        log.info("[+] enrichment done");
+
+        return enrichedRequest;
     }
 }

@@ -24,7 +24,6 @@ public class SmsConsumer {
         try {
             log.info("[+] consumed sms: {}", request);
 
-            log.info("[+] enriching sms..");
             Future<EnrichedRequest> enrichedFuture = notificationGateway.enrich(request, Map.of("channel", "sms"));
             EnrichedRequest enrichedRequest = enrichedFuture.get();
             log.info("[+] enriched sms: {}", enrichedRequest);
