@@ -1,4 +1,4 @@
-package io.younis.integration.router.notification;
+package io.younis.integration.router.stream;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
@@ -11,22 +11,22 @@ import java.util.Map;
 
 @Slf4j
 @Component
-@Profile("notification")
-public class NotificationEnricher {
+@Profile("stream-notification")
+public class StreamNotificationEnricher {
 
-    @ServiceActivator(inputChannel = "enrich", outputChannel = "enriched")
+    @ServiceActivator(inputChannel = ChannelNames.ENRICH, outputChannel = ChannelNames.ENRICHED)
     public EnrichedRequest enrich(@Payload Request request, @Headers Map<String, String> headers) {
 
         String channel = headers.get("channel");
 
-        log.info("[+] enrichment request for channel: {}", channel);
+        log.info("[+] stream enrichment request for channel: {}", channel);
 
-        EnrichedRequest enrichedRequest = EnrichmentStrategy
+        EnrichedRequest enrichedRequest = StreamEnrichmentStrategy
                 .getStrategy(channel)
-                .orElseThrow(() -> new IllegalArgumentException("illegal channel resolved: " + channel))
+                .orElseThrow(() -> new IllegalArgumentException("illegal stream channel resolved: " + channel))
                 .enrich(request);
 
-        log.info("[+] enrichment done");
+        log.info("[+] stream enrichment done");
 
         return enrichedRequest;
     }

@@ -1,4 +1,4 @@
-package io.younis.integration.router.notification;
+package io.younis.integration.router.stream;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.integration.annotation.Gateway;
@@ -13,16 +13,19 @@ import java.util.concurrent.Future;
 
 @Service
 @MessagingGateway
-@Profile("notification")
-public interface NotificationGateway {
+@Profile("stream-notification")
+public interface StreamNotificationGateway {
 
-    @Gateway(requestChannel = "event")
+    @Gateway(requestChannel = ChannelNames.EVENT_OUTPUT)
     @Async
     void publishEvent(@Payload Request request);
 
-    @Gateway(requestChannel = "producer")
-    void produceEvent(@Payload Request request);
+    // "produce" is a direct in-app channel.
+    // It's not a Kafka topic but a Spring Integration MessageChannel instance
+    @Gateway(requestChannel = ChannelNames.PRODUCE)
+    @Async
+    void produce(@Payload Request request);
 
-    @Gateway(requestChannel = "enrich", replyChannel = "enriched")
+    @Gateway(requestChannel = ChannelNames.ENRICH, replyChannel = ChannelNames.ENRICHED)
     Future<EnrichedRequest> enrich(@Payload Request request, @Headers Map<String, String> headers);
 }

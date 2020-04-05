@@ -1,3 +1,20 @@
 spring:
   profiles:
-    active: notification
+    active: stream-notification
+  cloud:
+    stream:
+      bindings:
+        eventOutput:
+          destination: streaming.notification.event
+        emailInput:
+          destination: streaming.notification.email
+        smsInput:
+          destination: streaming.notification.sms
+        smsOutput:
+          destination: streaming.notification.sms
+      kafka:
+        binder:
+          brokers: localhost:9092
+          producer-properties:
+            key.serializer: org.apache.kafka.common.serialization.StringSerializer
+            value.serializer: org.springframework.kafka.support.serializer.JsonSerializer

@@ -1,4 +1,4 @@
-package io.younis.integration.router.notification;
+package io.younis.integration.router.stream;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
@@ -10,28 +10,28 @@ import java.util.concurrent.Future;
 
 @Slf4j
 @Component
-@Profile("notification")
-public class EmailConsumer {
+@Profile("stream-notification")
+public class StreamEmailConsumer {
 
-    private NotificationGateway notificationGateway;
+    private StreamNotificationGateway notificationGateway;
 
-    public EmailConsumer(NotificationGateway notificationGateway) {
+    public StreamEmailConsumer(StreamNotificationGateway notificationGateway) {
         this.notificationGateway = notificationGateway;
     }
 
-    @ServiceActivator(inputChannel = "email")
+    @ServiceActivator(inputChannel = ChannelNames.EMAIL_INPUT)
     public void consumeEmail(Request request) {
         try {
-            log.info("[+] consumed email: {}", request);
+            log.info("[+] consumed stream email: {}", request);
 
             Future<EnrichedRequest> enrichedFuture = notificationGateway.enrich(request, Map.of("channel", "email"));
             EnrichedRequest enrichedRequest = enrichedFuture.get();
-            log.info("[+] enriched email: {}", enrichedRequest);
+            log.info("[+] enriched stream email: {}", enrichedRequest);
 
-            log.info("[+] sending email...");
-            log.info("[+] email sent!");
+            log.info("[+] sending stream email...");
+            log.info("[+] stream email sent!");
         } catch (Exception e) {
-            log.error("[x] failed to enrich email request with error: {}", e.getMessage());
+            log.error("[x] failed to enrich stream email request with error: {}", e.getMessage());
         }
     }
 }
